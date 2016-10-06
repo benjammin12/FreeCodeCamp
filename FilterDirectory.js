@@ -2,16 +2,18 @@
 
 var fs = require('fs'); 
 
-fs.readdir(process.argv[2] , function(err, directory){ //second argument of readdir is a callback
-    if (err)    //if there is an error , then return it
+var readDirectory = fs.readdir(process.argv[2] , function(err, directory){ //store your function in a readDirectory variable
+    if (err)    //check for err
         return console.log(err);
-        else{
-            for (var i =0 ; i < directory.length; i++){ //here we go through the length of the directory
-                if (directory[i].substring(directory[i].length-3) == ".md"){ //if the directory from the end-3 char is md
-                    console.log(directory[i]); //log it
+        else{ //if no error, go through the length and filter out what you want
+            for (var i =0 ; i < directory.length; i++){
+                if (directory[i].substring(directory[i].length-3) == process.argv[3]){ //takes in a 4th parameter for the type of directory you want to search for
+                    console.log(directory[i]);
                 }
             }
-            
         }
-        
-})
+    });
+                //use by typeing node ReadDirectoryModule.js [directory] [type of file]
+module.exports = {  //exporting your readDirectory file as readDirectory, now you can call it as that
+    readDirectory: readDirectory
+}
